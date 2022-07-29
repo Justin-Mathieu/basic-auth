@@ -10,8 +10,9 @@ const logger = require('./middleware/logger.js');
 
 const foodRoutes = require('./routes/food.js');
 const clothesRoutes = require('./routes/clothes.js');
-
+const authentication = require('./routes/auth');
 const app = express();
+const { userAuth } = require('../auth/basic')
 
 // Express Global Middleware
 app.use(express.json());
@@ -19,10 +20,11 @@ app.use(express.json());
 // Our own Global Middleware
 app.use(logger);
 
-// Use our routes from the routing module...
-app.use(foodRoutes);
-app.use(clothesRoutes);
 
+// Use our routes from the routing module...
+app.use(foodRoutes, logger);
+app.use(clothesRoutes, logger);
+app.use(authentication, userAuth);
 // Our Error Handlers -- need to be the last things defined!
 // These use the external modules we required above
 app.use('*', notFoundHandler);
