@@ -7,7 +7,7 @@
   our response as a JSON object
 */
 
-module.exports = function (err, req, res, next) {
+function handle500(err, req, res, next) {
   // Sometimes, errors come in as an object, others as a string
   const error = err.message ? err.message : err;
 
@@ -16,4 +16,6 @@ module.exports = function (err, req, res, next) {
     message: error,
   };
   res.status(500).json(errorObject);
-};
+}
+
+module.exports = handle500;
