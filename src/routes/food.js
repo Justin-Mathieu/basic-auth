@@ -45,3 +45,5 @@ async function deleteFood(req, res) {
   let deletedFood = await FoodCollection.delete(id);
   res.status(200).json(deletedFood);
 }
+
+module.exports = router;

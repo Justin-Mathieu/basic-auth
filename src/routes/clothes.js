@@ -43,3 +43,5 @@ async function deleteClothes(req, res) {
   let deletedClothes = await ClothesCollection.delete(id);
   res.status(200).json(deletedClothes);
 }
+
+module.exports = router;

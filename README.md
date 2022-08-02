@@ -5,6 +5,7 @@
 ## Requirements
 
 - Port number in .env file.
+-conection string in .env
 
 ## Running App
 

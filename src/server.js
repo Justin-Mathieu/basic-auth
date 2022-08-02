@@ -3,32 +3,48 @@
 // 3rd Party Dependencies (modules)
 const express = require('express');
 
+
+
 // Our own custom modules
 const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
 const logger = require('./middleware/logger.js');
-
+const auth = require('./middleware/auth/routes');
+const userRoutes = require('./routes/user');
 const foodRoutes = require('./routes/food.js');
 const clothesRoutes = require('./routes/clothes.js');
-const authentication = require('./routes/auth');
 const app = express();
-const { userAuth } = require('../auth/basic')
+
+
 
 // Express Global Middleware
 app.use(express.json());
 
+
+
 // Our own Global Middleware
 app.use(logger);
+app.use(auth);
 
 
 // Use our routes from the routing module...
-app.use(foodRoutes, logger);
-app.use(clothesRoutes, logger);
-app.use(authentication, userAuth);
+app.use(foodRoutes);
+app.use(clothesRoutes);
+app.use(userRoutes);
+
+
+
+
+// STRETCH GOAL
+// app.use('/api/v1', v1Routes);
+
 // Our Error Handlers -- need to be the last things defined!
 // These use the external modules we required above
 app.use('*', notFoundHandler);
 app.use(errorHandler);
+
+
+
 
 // Export an object with the express app and separate method that can start the server
 module.exports = {

@@ -12,7 +12,7 @@ const foodSchema = require('./food/model.js');
 const clothesSchema = require('./clothes/model.js');
 const recipeSchema = require('./recipe/model.js');
 const foodRecipeSchema = require('./foodRecipe/model.js');
-const userSchema = require('./users/model.js');
+const userSchema = require('./user/model.js');
 
 const sequelizeOptions =
   process.env.NODE_ENV === 'production'
@@ -38,10 +38,11 @@ const userModel = userSchema(sequelize, DataTypes);
 const FoodCollection = new Collection(FoodModel);
 const ClothesCollection = new Collection(ClothesModel);
 const RecipeCollection = new Collection(RecipeModel);
-const usersCollection = new Collection(userModel);
-// usersCollection.belongsToManyThrough(usersCollection, ClothesCollection);
+
 FoodCollection.belongsToManyThrough(RecipeCollection, FoodRecipeModel);
 RecipeCollection.belongsToManyThrough(FoodCollection, FoodRecipeModel);
+
+const userCollection = new Collection(userModel);
 
 module.exports = {
   db: sequelize,
@@ -49,5 +50,5 @@ module.exports = {
   Clothes: ClothesCollection,
   Recipe: RecipeCollection,
   FoodRecipe: FoodRecipeModel,
-  users: usersCollection,
+  User: userCollection,
 };
