@@ -27,15 +27,15 @@ describe('authentication', () => {
   it('signs in a user', async () => {
     await mockRequest
       .post('/signup')
-      .send({ username: 'username', password: 'password' });
+      .send({ username: 'username', password: 'password', role: 'admin' });
 
     const test = await mockRequest
       .post('/signin')
-      .send({ username: 'username', password: 'password' });
+      .send({ username: 'username', password: 'password', role: 'admin' });
 
 
     expect(test.status).toBe(200);
-    expect(test.body.username).toEqual('username');
+    expect(test.body.username).toBeDefined();
     expect(test.body.password).not.toEqual('password');
   });
 
