@@ -6,6 +6,6 @@ const { db } = require('./src/models/index.js');
 
 db.sync()
   .then(() => {
-    server.start(3000);
+    server.start(3002);
   })
   .catch(console.error);

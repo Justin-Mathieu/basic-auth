@@ -9,22 +9,25 @@ const express = require('express');
 const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
 const logger = require('./middleware/logger.js');
-const auth = require('./middleware/auth/routes');
+const auth = require('./middleware/auth/routes.js');
 const userRoutes = require('./routes/user');
 const foodRoutes = require('./routes/food.js');
 const clothesRoutes = require('./routes/clothes.js');
 const app = express();
+const validate = require('./middleware/auth/auth.js');
+const refresh = require('../src/middleware/auth/token');
 
 
 
 // Express Global Middleware
 app.use(express.json());
-
-
+app.use(auth);
+app.use(validate);
+// app.use(refresh);
 
 // Our own Global Middleware
 app.use(logger);
-app.use(auth);
+
 
 
 // Use our routes from the routing module...

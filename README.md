@@ -13,6 +13,8 @@
 
 ## UML
 
+![Auth uml](src/img/auth.png)
+
 ### **Notes**
 
 - Work in progress.
