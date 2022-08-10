@@ -22,9 +22,7 @@ function validate(req, res, next) {
 }
 
 
-// function Authorize(req, res){
-//   const session = 
-// }
+
 
 
 

@@ -3,14 +3,12 @@ const express = require('express');
 const router = express.Router();
 const { User } = require('../../models/index');
 const bcrypt = require('bcrypt');
-const { Session } = require('../../models/index');
+
+
 async function signUp(req, res) {
   try {
     let body = req.body;
     let createdUser = await User.create(body);
-    let session = await Session.create(body);
-    User.session = session;
-    console.log(createdUser);
     res.status(200).send(createdUser);
 
   }
@@ -24,12 +22,10 @@ async function signIn(req, res) {
   try {
     const user = await User.model.findOne({ where: { username: req.body.username } });
     const check = await bcrypt.compare(req.body.password, user.password);
-    const Session = await Session.findOne({ where: { username: req.body.username } });
-
 
     if (check) {
 
-      res.status(200).send({ username: user.username, token: user.token, role: 'admin', session_id: Session.session_id });
+      res.status(200).send({ username: user.username, token: user.token, role: 'admin' });
     }
   }
   catch (error) {
