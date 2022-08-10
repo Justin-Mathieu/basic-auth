@@ -9,47 +9,40 @@ const express = require('express');
 const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
 const logger = require('./middleware/logger.js');
-const auth = require('./middleware/auth/routes.js');
-const userRoutes = require('./routes/user');
-const foodRoutes = require('./routes/food.js');
-const clothesRoutes = require('./routes/clothes.js');
+const authRouter = require('./middleware/auth/routes.js');
 const app = express();
 const validate = require('./middleware/auth/auth.js');
-const refresh = require('../src/middleware/auth/token');
+const protectedRoutes = require('./routes/v2');
+const unProtectedRoutes = require('./routes/v1.js');
+const { Food, Clothes, User } = require('./models/index.js');
+
 
 
 
 // Express Global Middleware
 app.use(express.json());
-app.use(auth);
-app.use(validate);
-// app.use(refresh);
 
-// Our own Global Middleware
+
+//middleware and routes in order 
+
+app.use(authRouter);
+
+
+app.use('/v1', unProtectedRoutes([Clothes]));
+app.use(validate);
+app.use('/v2', protectedRoutes([Food, User]));
 app.use(logger);
 
 
 
-// Use our routes from the routing module...
-app.use(foodRoutes);
-app.use(clothesRoutes);
-app.use(userRoutes);
 
-
-
-
-// STRETCH GOAL
-// app.use('/api/v1', v1Routes);
-
-// Our Error Handlers -- need to be the last things defined!
-// These use the external modules we required above
 app.use('*', notFoundHandler);
 app.use(errorHandler);
 
 
 
 
-// Export an object with the express app and separate method that can start the server
+
 module.exports = {
   server: app,
   start: (port) => {

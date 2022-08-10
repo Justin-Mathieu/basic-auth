@@ -35,7 +35,7 @@ const user = (sequelize, DataTypes) => {
 
     let hash = await bcrypt.hash(user.password, 10);
     user.password = hash;
-    user.role = 'admin';
+    user.role;
 
   });
   return userModel;
