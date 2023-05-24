@@ -1,6 +1,7 @@
+'use strict';
 
-const Users = (sequelize, DataTypes) => {
-    const userModel = sequelize.define('User', {
+module.exports = (sequelize, DataTypes) =>
+    sequelize.define('User', {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -15,10 +16,9 @@ const Users = (sequelize, DataTypes) => {
 
     });
 
-    userModel.beforeCreate(async (user) => {
-        let hash = await bcrypt.hash(user.password, 5);
-        user.password = hash
-    });
-    return userModel;
-}
-module.exports = Users;
+    // userModel.beforeCreate(async (user) => {
+    //     let hash = await bcrypt.hash(user.password, 5);
+    //     user.password = hash
+    // });
+    // return userModel;
+

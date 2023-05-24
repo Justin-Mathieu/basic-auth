@@ -1,8 +1,8 @@
 # basic-auth
 
 401d53 Lab 6 basic auth.  
-basic-api-server
-401d53 Lab 3 basic api server
+basic-auth
+401d53 Lab 3 basic auth
 
 ## Project: Basic api server
 
@@ -34,7 +34,7 @@ Practice with basic server routing and testing.
 
 ## Routes
 
-POST: /signin - Authenicateds user with password.
+POST: /signin - Authenicates user with password.
 
 POST : /signup - Creates user in database.
 
@@ -44,12 +44,4 @@ Run the command npm test with dependencies installed.
 
 ## UML
 
-![UML](./)
-
-
-## TODO:
-
-- UML
-- Tests
-- debug server
-- finish functionality
+![UML](./assets/Lab06UML.png)
