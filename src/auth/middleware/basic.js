@@ -1,27 +1,29 @@
 
 
+const bcrypt = require('bcrypt');
+const base64 = require('base-64');
+const { Users } = require('../models')
 
 
+module.exports = async (req, res, next) => {
+    console.log(req.headers.authorization);
+    let basicHeaderParts = req.headers.authorization.split(' ');
+    let encodedString = basicHeaderParts.pop();
+    let decodedString = base64.decode(encodedString);
+    let [username, password] = decodedString.split(':');
 
-function validate(req, res, next) {
-    const token = req.headers['authorization'];
+    try {
+        const user = await Users.findOne({ where: { username: username } });
+        const valid = await bcrypt.compare(password, user.password);
+        if (valid) {
+            req.user = user;
+            next();
+        }
+        else {
+            throw new Error('Invalid User');
+        }
+    } catch (error) { res.status(403).send('Invalid Login'); }
 
-    if (token) {
-        const user = jwt.verify(token, SECRET);
-        req.user = user;
-        next();
-
-    }
-    else {
-        res.status(403).send('Not Authorized');
-
-
-    }
-}
+};
 
 
-
-
-
-
-module.exports = validate;
