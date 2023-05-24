@@ -14,8 +14,8 @@ Practice with basic server routing and testing.
 
 ## Links and Resources
 
-- GitHub Actions
-- back-end prod url
+- [GitHub Actions](https://github.com/Justin-Mathieu/basic-auth/actions)
+- [back-end prod url](https://basic-auth-dn1u.onrender.com)
 
 ## Collaborators
 
